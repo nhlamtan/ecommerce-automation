@@ -1,7 +1,7 @@
-import { getPassword } from "../utils/env.util";
+import { getPassword, getEmail } from "../utils/env.util";
 import { generateRandomEmail } from "../utils/random.util";
 
-const email = generateRandomEmail();
+const email = getEmail();
 const password = getPassword();
 
 export function loginData() {
