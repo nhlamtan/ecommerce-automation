@@ -36,3 +36,13 @@ export function registerData() {
     },
   };
 }
+
+export function contactData() {
+  return {
+    name: "demo",
+    email,
+    subject: "products",
+    message: "Please check this product",
+    filePath: "data/ui.data.ts",
+  };
+}
