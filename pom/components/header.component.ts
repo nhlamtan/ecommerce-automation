@@ -23,7 +23,9 @@ export class HeaderComponent {
     this.productsLink = page.getByRole("link", { name: "Products" });
     this.cartLink = page.getByRole("link", { name: "Cart" });
     this.authLink = page.getByRole("link", { name: " Signup / Login" });
-    this.testCasesLink = page.getByRole("link", { name: "Test Cases" });
+    this.testCasesLink = page.getByRole("link", {
+      name: " Test Cases",
+    });
     this.apiTestingLink = page.getByRole("link", { name: "API Testing" });
     this.videoLink = page.getByRole("link", { name: "Video Tutorials" });
     this.contactLink = page.getByRole("link", { name: "Contact us" });
