@@ -12,6 +12,8 @@ export class HeaderComponent {
   readonly apiTestingLink: Locator;
   readonly videoLink: Locator;
   readonly contactLink: Locator;
+  readonly logoutLink: Locator;
+  readonly deleteAccountLink: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -25,37 +27,51 @@ export class HeaderComponent {
     this.apiTestingLink = page.getByRole("link", { name: "API Testing" });
     this.videoLink = page.getByRole("link", { name: "Video Tutorials" });
     this.contactLink = page.getByRole("link", { name: "Contact us" });
+    this.logoutLink = page.getByRole("link", { name: " Logout" });
+    this.deleteAccountLink = page.getByRole("link", {
+      name: " Delete Account",
+    });
   }
 
-  async openHomePage() {
+  async gotoHomePage() {
     await this.homeLink.click();
   }
 
-  async openProductsPage() {
+  async gotoProductsPage() {
     await this.productsLink.click();
   }
 
-  async openCartPage() {
+  async gotoCartPage() {
     await this.cartLink.click();
   }
 
-  async openAuthPage() {
+  async gotoAuthPage() {
     await this.authLink.click();
   }
 
-  async openTestCasesPage() {
+  async gotoTestCasesPage() {
     await this.testCasesLink.click();
   }
 
-  async openApiTestingPage() {
+  async gotoApiTestingPage() {
     await this.apiTestingLink.click();
   }
 
-  async openVideoPage() {
+  async gotoVideoPage() {
     await this.videoLink.click();
   }
 
-  async openContactUsPage() {
+  async gotoContactUsPage() {
     await this.contactLink.click();
+  }
+
+  async logout() {
+    await this.logoutLink.waitFor({ state: "visible" });
+    await this.logoutLink.click();
+  }
+
+  async deleteAccount() {
+    await this.deleteAccountLink.waitFor({ state: "visible" });
+    await this.deleteAccountLink.click();
   }
 }
