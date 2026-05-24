@@ -2,7 +2,7 @@ import { test, expect } from "../../../fixtures/ui.fixture";
 import { SignupPage } from "../../../pom/page/signup.page";
 import { AuthPage } from "../../../pom/page/auth.page";
 import { registerData } from "../../../data/ui.data";
-import { AccountCreatedPage } from "../../../pom/page/account-created.page";
+
 async function processToAuthPage(authPage: AuthPage) {
   await authPage.header.gotoAuthPage();
   await expect(authPage.loginFormHeading).toBeVisible();
@@ -52,12 +52,15 @@ test.describe("Signup UI test", () => {
 
   test("Create Account successfully", async ({ page }) => {
     const user = getUser();
-    const accountCreatedPage = new AccountCreatedPage(page);
 
     await signupPage.fillAccountInformation(user.account);
     await signupPage.fillAddressInfo(user.address);
     await signupPage.createAccount();
 
-    await expect(accountCreatedPage.successHeading).toBeVisible();
+    await expect(
+      page.getByRole("heading", {
+        name: "Account Created!",
+      }),
+    ).toBeVisible();
   });
 });
