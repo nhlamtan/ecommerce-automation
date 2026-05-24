@@ -46,3 +46,11 @@ export function contactData() {
     filePath: "data/ui.data.ts",
   };
 }
+
+export function reviewData() {
+  return {
+    name: "demo",
+    email,
+    message: "Good",
+  };
+}
