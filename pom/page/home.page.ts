@@ -45,6 +45,10 @@ export class HomePage extends BasePage {
   readonly continueShoppingButton: Locator;
   readonly viewCartLink: Locator;
 
+  // Scroll
+  readonly scrollUpButton: Locator;
+  readonly heroText: Locator;
+
   constructor(page: Page) {
     super(page);
 
@@ -119,6 +123,10 @@ export class HomePage extends BasePage {
     this.viewCartLink = this.addedToCartModal.getByRole("link", {
       name: "View Cart",
     });
+
+    // constructor
+    this.scrollUpButton = page.locator("#scrollUp");
+    this.heroText = page.getByRole("heading", { name: "AutomationExercise" });
   }
 
   async clickPrevButton() {
@@ -213,5 +221,19 @@ export class HomePage extends BasePage {
 
   async goToViewCart() {
     await this.viewCartLink.click();
+  }
+
+  async scrollToBottom() {
+    await this.page.evaluate(() =>
+      window.scrollTo(0, document.body.scrollHeight),
+    );
+  }
+
+  async scrollToTop() {
+    await this.page.evaluate(() => window.scrollTo(0, 0));
+  }
+
+  async clickScrollUpButton() {
+    await this.scrollUpButton.click();
   }
 }

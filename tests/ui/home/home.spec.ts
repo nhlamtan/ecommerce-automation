@@ -110,4 +110,23 @@ test.describe("Home Page UI Tests", () => {
       );
     });
   });
+
+  // Scroll Functionality
+  test.describe("Scroll functionality", () => {
+    test("Should scroll up via arrow button", async () => {
+      await homePage.scrollToBottom();
+      await expect(homePage.footer.subscribeHeading).toBeVisible();
+
+      await homePage.clickScrollUpButton();
+      await expect(homePage.heroText).toBeVisible();
+    });
+
+    test("Should scroll up without arrow button", async () => {
+      await homePage.scrollToBottom();
+      await expect(homePage.footer.subscribeHeading).toBeVisible();
+
+      await homePage.scrollToTop();
+      await expect(homePage.heroText).toBeVisible();
+    });
+  });
 });
