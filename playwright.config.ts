@@ -40,6 +40,17 @@ export default defineConfig({
       use: { ...devices["Desktop Chrome"] },
     },
 
+    {
+      name: "ui",
+      testMatch: "**/*.spec.ts",
+      use: { baseURL: "https://automationexercise.com" },
+    },
+    {
+      name: "api",
+      testMatch: "**/*.api.spec.ts",
+      use: { baseURL: "https://automationexercise.com/api" },
+    },
+
     // {
     //   name: 'firefox',
     //   use: { ...devices['Desktop Firefox'] },
