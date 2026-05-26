@@ -54,3 +54,13 @@ export function reviewData() {
     message: "Good",
   };
 }
+
+export function paymentData() {
+  return {
+    name: "Test User",
+    number: "4111111111111111",
+    cvc: "123",
+    month: "12",
+    year: "2027",
+  };
+}
