@@ -14,8 +14,8 @@ export function loginData() {
 export function userData() {
   return {
     name: faker.person.fullName(),
-    email: faker.internet.email(),
-    password: faker.internet.password(),
+    email,
+    password,
     title: "Mr",
     birth_date: "1",
     birth_month: "1",
