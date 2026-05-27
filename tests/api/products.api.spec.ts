@@ -16,4 +16,15 @@ test.describe("Products API", () => {
     expect(responseJSON.responseCode).toBe(405);
     expect(responseJSON.message).toBe("This request method is not supported.");
   });
+
+  test("POST /searchProduct without search_product parameter - should return 400", async ({
+    apiContext,
+  }) => {
+    const response = await apiContext.post("/api/searchProduct");
+    const responseJSON = await response.json();
+    expect(responseJSON.responseCode).toBe(400);
+    expect(responseJSON.message).toBe(
+      "Bad request, search_product parameter is missing in POST request.",
+    );
+  });
 });

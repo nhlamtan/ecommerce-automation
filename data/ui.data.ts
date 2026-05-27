@@ -1,5 +1,6 @@
 import { getPassword, getEmail } from "../utils/env.util";
 import { generateRandomEmail } from "../utils/random.util";
+import { faker } from "@faker-js/faker";
 
 const email = getEmail();
 const password = getPassword();
@@ -14,50 +15,50 @@ export function loginData() {
 export function registerData() {
   return {
     account: {
-      title: "Mr" as const,
-      name: "Test Name",
-      email,
-      password,
-      day: "14",
-      month: "November",
-      year: "2003",
+      name: faker.person.fullName(),
+      email: faker.internet.email(),
+      password: faker.internet.password(),
+      title: "Mr",
+      birthDate: "1",
+      birthMonth: "1",
+      birthYear: "1990",
     },
     address: {
-      firstName: "First",
-      lastName: "Last",
-      company: "check",
-      address: "Address 1",
-      address2: "Address 2",
-      country: "Singapore",
-      state: "Check",
-      city: "Check",
-      zipcode: "10101010",
-      mobileNumber: "0123456789",
+      firstName: faker.person.firstName(),
+      lastName: faker.person.lastName(),
+      company: faker.company.name(),
+      address: faker.location.streetAddress(),
+      address2: faker.location.secondaryAddress(),
+      country: "United States",
+      zipcode: faker.location.zipCode(),
+      state: faker.location.state(),
+      city: faker.location.city(),
+      mobileNumber: faker.phone.number(),
     },
   };
 }
 
 export function contactData() {
   return {
-    name: "demo",
-    email,
-    subject: "products",
-    message: "Please check this product",
+    name: faker.person.fullName(),
+    email: faker.internet.email(),
+    subject: faker.lorem.sentence(),
+    message: faker.lorem.paragraph(),
     filePath: "data/ui.data.ts",
   };
 }
 
 export function reviewData() {
   return {
-    name: "demo",
-    email,
-    message: "Good",
+    name: faker.person.fullName(),
+    email: faker.internet.email(),
+    message: faker.lorem.sentence(),
   };
 }
 
 export function paymentData() {
   return {
-    name: "Test User",
+    name: faker.person.fullName(),
     number: "4111111111111111",
     cvc: "123",
     month: "12",
