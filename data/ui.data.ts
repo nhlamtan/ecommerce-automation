@@ -15,13 +15,13 @@ export function loginData() {
 export function registerData() {
   return {
     account: {
+      title: "Mr" as const,
       name: faker.person.fullName(),
-      email: faker.internet.email(),
-      password: faker.internet.password(),
-      title: "Mr",
-      birthDate: "1",
-      birthMonth: "1",
-      birthYear: "1990",
+      email,
+      password,
+      day: "1",
+      month: "1",
+      year: "1990",
     },
     address: {
       firstName: faker.person.firstName(),

@@ -1,5 +1,15 @@
-// data/api.data.ts
 import { faker } from "@faker-js/faker";
+import { getEmail, getPassword } from "../utils/env.util";
+
+const email = getEmail();
+const password = getPassword();
+
+export function loginData() {
+  return {
+    email,
+    password,
+  };
+}
 
 export function userData() {
   return {
@@ -22,4 +32,3 @@ export function userData() {
     mobile_number: faker.phone.number(),
   };
 }
-
