@@ -12,7 +12,6 @@ test.describe("Auth API", () => {
       email: login.email,
       password: login.password,
     });
-
     expect(body.responseCode).toBe(200);
     expect(body.message).toContain("User exists!");
   });

@@ -12,23 +12,6 @@ test.describe("Account API", () => {
     expect(body.message).toContain("User created!");
   });
 
-  test("Delete /deleteAccount - should return 200", async ({ apiContext }) => {
-    const body = await apiDelete(apiContext, "/api/deleteAccount", {
-      email: user.email,
-      password: user.password,
-    });
-
-    expect(body.responseCode).toBe(200);
-    expect(body.message).toContain("Account deleted!");
-  });
-
-  test("PUT /updateAccount - should return 209", async ({ apiContext }) => {
-    const body = await apiPut(apiContext, "/api/updateAccount", { ...user });
-
-    expect(body.responseCode).toBe(200);
-    expect(body.message).toContain("User updated!");
-  });
-
   test("Get /getUserDetailByEmail - should return 209", async ({
     apiContext,
   }) => {
@@ -39,5 +22,22 @@ test.describe("Account API", () => {
     expect(body.responseCode).toBe(200);
     expect(body.user).toBeDefined();
     expect(body.user.email).toBe(user.email);
+  });
+
+  test("PUT /updateAccount - should return 209", async ({ apiContext }) => {
+    const body = await apiPut(apiContext, "/api/updateAccount", { ...user });
+
+    expect(body.responseCode).toBe(200);
+    expect(body.message).toContain("User updated!");
+  });
+
+  test("Delete /deleteAccount - should return 200", async ({ apiContext }) => {
+    const body = await apiDelete(apiContext, "/api/deleteAccount", {
+      email: user.email,
+      password: user.password,
+    });
+
+    expect(body.responseCode).toBe(200);
+    expect(body.message).toContain("Account deleted!");
   });
 });
