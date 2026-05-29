@@ -13,21 +13,19 @@ test.describe("Signup UI test", () => {
   let signupPage: SignupPage;
   let authPage: AuthPage;
 
-  const getUser = () => registerData();
-
   test.beforeEach("Go to Signup Page", async ({ page }) => {
     signupPage = new SignupPage(page);
     authPage = new AuthPage(page);
 
     await processToAuthPage(authPage);
-    const user = getUser();
+    const user = registerData();
 
     await authPage.fillSignupForm(user.account.name, user.account.email);
     await expect(signupPage.signupPageHeading).toBeVisible();
   });
 
   test("Fill detail account information", async () => {
-    const user = getUser();
+    const user = registerData();
 
     await signupPage.fillAccountInformation(user.account);
     await expect(signupPage.nameInput).toHaveValue(user.account.name);
@@ -44,14 +42,14 @@ test.describe("Signup UI test", () => {
   });
 
   test("Fill detail address information", async () => {
-    const user = getUser();
+    const user = registerData();
 
     await signupPage.fillAddressInfo(user.address);
     await expect(signupPage.addressInput).toHaveValue(user.address.address);
   });
 
   test("Create Account successfully", async ({ page }) => {
-    const user = getUser();
+    const user = registerData();
 
     await signupPage.fillAccountInformation(user.account);
     await signupPage.fillAddressInfo(user.address);

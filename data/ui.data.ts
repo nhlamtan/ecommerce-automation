@@ -1,14 +1,10 @@
 import { getPassword, getEmail } from "../utils/env.util";
-import { generateRandomEmail } from "../utils/random.util";
 import { faker } from "@faker-js/faker";
-
-const email = getEmail();
-const password = getPassword();
 
 export function loginData() {
   return {
-    email,
-    password,
+    email: getEmail(),
+    password: getPassword(),
   };
 }
 
@@ -17,11 +13,11 @@ export function registerData() {
     account: {
       title: "Mr" as const,
       name: faker.person.fullName(),
-      email,
-      password,
-      day: "1",
-      month: "1",
-      year: "1990",
+      email: faker.internet.email(),
+      password: getPassword(),
+      day: "14",
+      month: "November",
+      year: "2003",
     },
     address: {
       firstName: faker.person.firstName(),

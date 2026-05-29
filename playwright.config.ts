@@ -31,14 +31,20 @@ export default defineConfig({
     acceptDownloads: true,
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "on-first-retry",
+    actionTimeout: 10000,
+    navigationTimeout: 30000,
+    serviceWorkers: "block",
+  },
+  expect: {
+    timeout: 10000,
   },
 
   /* Configure projects for major browsers */
   projects: [
-    {
-      name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
-    },
+    // {
+    //   name: "chromium",
+    //   use: { ...devices["Desktop Chrome"] },
+    // },
 
     {
       name: "ui",

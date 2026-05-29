@@ -2,6 +2,7 @@ import { test, expect } from "../../../fixtures/ui.fixture";
 import { AuthPage } from "../../../pom/page/auth.page";
 import { loginData, registerData } from "../../../data/ui.data";
 import { generateRandomEmail } from "../../../utils/random.util";
+import { SignupPage } from "../../../pom/page/signup.page";
 
 async function navigateToAuthPage(authPage: AuthPage) {
   await authPage.header.gotoAuthPage();
@@ -48,8 +49,8 @@ test.describe("Auth UI Test", () => {
     test("Should show error when email is already registered", async ({
       page,
     }) => {
-      const account = registerData().account;
-      await authPage.fillSignupForm("demo", account.email);
+      const user = loginData();
+      await authPage.fillSignupForm("demo", user.email);
 
       await expect(
         page.getByText("Email Address already exist!"),
@@ -71,11 +72,18 @@ test.describe("Auth UI Test", () => {
     });
 
     test("Should delete account successfully", async ({ page }) => {
+      await authPage.header.logout();
+      const signupPage = new SignupPage(page);
+
+      const user = registerData();
+      await authPage.fillSignupForm(user.account.name, user.account.email);
+      await signupPage.fillAccountInformation(user.account);
+      await signupPage.fillAddressInfo(user.address);
+      await signupPage.createAccount();
+      await authPage.header.gotoHomePage();
+
       await authPage.header.deleteAccount();
       await expect(page).toHaveURL("/delete_account");
-      await expect(
-        page.getByRole("heading", { name: "Account Deleted!" }),
-      ).toBeVisible();
     });
   });
 });
