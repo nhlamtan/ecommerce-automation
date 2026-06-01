@@ -37,43 +37,53 @@ export class HeaderComponent {
 
   async gotoHomePage() {
     await this.homeLink.click();
+    await this.page.waitForLoadState("domcontentloaded");
   }
 
   async gotoProductsPage() {
     await this.productsLink.click();
+    await this.page.waitForLoadState("domcontentloaded");
   }
 
   async gotoCartPage() {
     await this.cartLink.click();
+    await this.page.waitForLoadState("domcontentloaded");
   }
 
   async gotoAuthPage() {
     await this.authLink.click();
+    await this.page.waitForLoadState("domcontentloaded");
   }
 
   async gotoTestCasesPage() {
     await this.testCasesLink.click();
+    await this.page.waitForLoadState("domcontentloaded");
   }
 
   async gotoApiTestingPage() {
     await this.apiTestingLink.click();
+    await this.page.waitForLoadState("domcontentloaded");
   }
 
   async gotoVideoPage() {
     await this.videoLink.click();
+    await this.page.waitForLoadState("domcontentloaded");
   }
 
   async gotoContactUsPage() {
     await this.contactLink.click();
+    await this.page.waitForLoadState("domcontentloaded");
   }
 
   async logout() {
     await this.logoutLink.waitFor({ state: "visible" });
     await this.logoutLink.click();
+    await this.page.waitForLoadState("domcontentloaded");
   }
 
   async deleteAccount() {
     await this.deleteAccountLink.waitFor({ state: "visible" });
     await this.deleteAccountLink.click();
+    await this.page.waitForLoadState("domcontentloaded");
   }
 }

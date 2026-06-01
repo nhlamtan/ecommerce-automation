@@ -12,4 +12,8 @@ export class BasePage {
     this.header = new HeaderComponent(page);
     this.footer = new FooterComponent(page);
   }
+  
+  async scrollToElement(locator: Locator) {
+    await locator.scrollIntoViewIfNeeded();
+  }
 }

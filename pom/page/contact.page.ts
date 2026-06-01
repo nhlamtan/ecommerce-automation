@@ -25,7 +25,7 @@ export class ContactPage extends BasePage {
     this.subjectInput = page.getByPlaceholder("Subject");
     this.messageTextarea = page.getByPlaceholder("Your Message Here");
     this.contactFileUpload = page.getByRole("button", { name: "Choose File" });
-    this.submitButton = page.getByRole("button", { name: "Submit" });
+    this.submitButton = page.locator(".btn.submit_form");
   }
 
   async fillContactForm(data: {
@@ -43,6 +43,7 @@ export class ContactPage extends BasePage {
   }
 
   async clickSubmit() {
+    await this.page.waitForLoadState("domcontentloaded");
     await this.submitButton.click();
   }
 }

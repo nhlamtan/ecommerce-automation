@@ -1,10 +1,9 @@
 import { test, expect } from "../../../fixtures/ui.fixture";
-import { PaymentPage } from "../../../pom/page/payment.page";
-import { CheckoutPage } from "../../../pom/page/checkout.page";
-import { ProductsPage } from "../../../pom/page/products.page";
-import { AuthPage } from "../../../pom/page/auth.page";
 import { loginData, paymentData } from "../../../data/ui.data";
+import { AuthPage } from "../../../pom/page/auth.page";
+import { ProductsPage } from "../../../pom/page/products.page";
 import { CartPage } from "../../../pom/page/cart.page";
+import { CheckoutPage } from "../../../pom/page/checkout.page";
 
 async function navigateToPaymentPage(
   authPage: AuthPage,
@@ -25,31 +24,26 @@ async function navigateToPaymentPage(
   await expect(cartPage.cartTable).toBeVisible();
   await cartPage.proceedToCheckout();
 
-  await expect(checkoutPage.page).toHaveURL("/checkout");
+  await expect(checkoutPage.page).toHaveURL(/checkout/);
   await checkoutPage.clickPlaceOrder();
 }
 
+test.describe.configure({ mode: "serial" });
 test.describe("Payment Page UI Tests", () => {
-  let paymentPage: PaymentPage;
-  let checkoutPage: CheckoutPage;
-  let productsPage: ProductsPage;
-  let cartPge: CartPage;
-  let authPage: AuthPage;
+  test.beforeEach(
+    "Navigate to Payment Page",
+    async ({ paymentPage, authPage, productsPage, cartPage, checkoutPage }) => {
+      await navigateToPaymentPage(
+        authPage,
+        productsPage,
+        cartPage,
+        checkoutPage,
+      );
+      await expect(paymentPage.paymentHeading).toBeVisible();
+    },
+  );
 
-  test.beforeEach("Navigate to Payment Page", async ({ page }) => {
-    paymentPage = new PaymentPage(page);
-    checkoutPage = new CheckoutPage(page);
-    productsPage = new ProductsPage(page);
-    cartPge = new CartPage(page);
-    authPage = new AuthPage(page);
-
-    await navigateToPaymentPage(authPage, productsPage, cartPge, checkoutPage);
-    await expect(paymentPage.paymentHeading).toBeVisible();
-  });
-
-  // Layout
-
-  test("Should display payment form", async () => {
+  test("Should display payment form", async ({ paymentPage }) => {
     await expect(paymentPage.nameOnCard).toBeVisible();
     await expect(paymentPage.cardNumber).toBeVisible();
     await expect(paymentPage.cardCvc).toBeVisible();
@@ -58,13 +52,9 @@ test.describe("Payment Page UI Tests", () => {
     await expect(paymentPage.submitButton).toBeVisible();
   });
 
-  // Fill Card Info
-
-  test("Should fill card information correctly", async () => {
+  test("Should fill card information correctly", async ({ paymentPage }) => {
     const card = paymentData();
-
     await paymentPage.fillCardInfo(card);
-
     await expect(paymentPage.nameOnCard).toHaveValue(card.name);
     await expect(paymentPage.cardNumber).toHaveValue(card.number);
     await expect(paymentPage.cardCvc).toHaveValue(card.cvc);
@@ -72,36 +62,41 @@ test.describe("Payment Page UI Tests", () => {
     await expect(paymentPage.expiryYear).toHaveValue(card.year);
   });
 
-  // Payment
-
-  test("Should complete payment and show success", async ({ page }) => {
+  test("Should complete payment and show success", async ({
+    page,
+    paymentPage,
+  }) => {
     const card = paymentData();
-
     await paymentPage.fillCardInfo(card);
     await paymentPage.clickPayAndConfirm();
-
     await expect(page.getByText("Order Placed!")).toBeVisible();
   });
 
-  test.describe("Payment done", () => {
-    test.beforeEach("Complete payment", async () => {
-      const card = paymentData();
-      await paymentPage.fillCardInfo(card);
-      await paymentPage.clickPayAndConfirm();
-      await expect(paymentPage.orderPlacedHeading).toBeVisible();
-    });
+  test("Should download invoice successfully", async ({
+    page,
+    paymentPage,
+  }) => {
+    const card = paymentData();
+    await paymentPage.fillCardInfo(card);
+    await paymentPage.clickPayAndConfirm();
+    await expect(paymentPage.orderPlacedHeading).toBeVisible();
 
-    test("Should download invoice successfully", async ({ page }) => {
-      const downloadPromise = page.waitForEvent("download");
-      await paymentPage.downloadInvoice();
-      const download = await downloadPromise;
+    const downloadPromise = page.waitForEvent("download");
+    await paymentPage.downloadInvoice();
+    const download = await downloadPromise;
+    expect(download).toBeTruthy();
+  });
 
-      expect(download).toBeTruthy();
-    });
+  test("Should navigate to home after continue", async ({
+    page,
+    paymentPage,
+  }) => {
+    const card = paymentData();
+    await paymentPage.fillCardInfo(card);
+    await paymentPage.clickPayAndConfirm();
+    await expect(paymentPage.orderPlacedHeading).toBeVisible();
 
-    test("Should navigate to home after continue", async ({ page }) => {
-      await paymentPage.clickContinueShopping();
-      await expect(page).toHaveURL("/");
-    });
+    await paymentPage.clickContinueShopping();
+    await expect(page).toHaveURL("/");
   });
 });

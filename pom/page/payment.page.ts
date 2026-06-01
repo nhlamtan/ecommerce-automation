@@ -54,6 +54,7 @@ export class PaymentPage extends BasePage {
 
   async clickPayAndConfirm() {
     await this.submitButton.click();
+    await expect(this.orderPlacedHeading).toBeVisible({ timeout: 15000 });
   }
 
   async downloadInvoice() {
@@ -62,5 +63,6 @@ export class PaymentPage extends BasePage {
 
   async clickContinueShopping() {
     await this.continueButton.click();
+    await this.page.waitForLoadState("domcontentloaded");
   }
 }

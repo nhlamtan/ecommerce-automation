@@ -73,22 +73,26 @@ export class CartPage extends BasePage {
 
   async deleteProductByIndex(index: number) {
     await this.cartItemDeleteButtons.nth(index).click();
+    await this.page.waitForLoadState("domcontentloaded");
   }
 
   async deleteAllProducts() {
     const count = await this.cartItemDeleteButtons.count();
     for (let i = count - 1; i >= 0; i--) {
       await this.cartItemDeleteButtons.nth(i).click();
+      await this.page.waitForLoadState("domcontentloaded");
     }
   }
 
   async proceedToCheckout() {
     await this.proceedToCheckoutButton.click();
+    await this.page.waitForLoadState("domcontentloaded");
   }
 
   async proceedToCheckoutAsGuest() {
     await this.proceedToCheckout();
     await this.continueOnCartLink.click();
+    await this.page.waitForLoadState("domcontentloaded");
   }
 
   async proceedToCheckoutWithLogin() {
@@ -96,7 +100,8 @@ export class CartPage extends BasePage {
     await this.registerLoginLink.click();
   }
 
-  async clickHereLink(){
+  async clickHereLink() {
     await this.emptyCartLink.click();
+    await this.page.waitForLoadState("domcontentloaded");
   }
 }

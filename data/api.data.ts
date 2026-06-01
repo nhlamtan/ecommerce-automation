@@ -1,20 +1,17 @@
 import { faker } from "@faker-js/faker";
 import { getEmail, getPassword } from "../utils/env.util";
 
-const email = getEmail();
-const password = getPassword();
-
 export function loginData() {
   return {
-    email,
-    password,
+    email: getEmail(),
+    password: getPassword(),
   };
 }
 
 export function userData() {
   return {
     name: faker.person.fullName(),
-    email: faker.internet.email(),
+    email: "demouser12345@gmail.com",
     password: "123123",
     title: "Mr",
     birth_date: "1",

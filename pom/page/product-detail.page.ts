@@ -1,7 +1,7 @@
-import { Page, Locator } from "@playwright/test";
-import { BasePage } from "./base.page";
+import { Page, Locator, expect } from "@playwright/test";
+import { ProductsPage } from "./products.page";
 
-export class ProductDetailPage extends BasePage {
+export class ProductDetailPage extends ProductsPage {
   // Product info
   readonly productName: Locator;
   readonly productCategory: Locator;
@@ -80,6 +80,7 @@ export class ProductDetailPage extends BasePage {
   }
 
   async addToCart() {
+    await this.addToCartButton.waitFor({ state: "visible" });
     await this.addToCartButton.click();
   }
 
@@ -89,10 +90,12 @@ export class ProductDetailPage extends BasePage {
   }
 
   async continueShopping() {
+    await expect(this.continueShoppingButton).toBeVisible({ timeout: 15000 });
     await this.continueShoppingButton.click();
   }
 
   async goToViewCart() {
+    await expect(this.viewCartLink).toBeVisible({ timeout: 15000 });
     await this.viewCartLink.click();
   }
 
